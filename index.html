@@ -528,20 +528,29 @@ function renderProducts() {
 // CARRITO
 // ============================================
 
+
 function addToCart(id) {
-  const product = products.find(p => p.id === id);
+  id = Number(id);
+
+  const product = products.find(p => Number(p.id) === id);
+
   if (!product) return;
 
-  const existing = cart.find(item => item.id === id);
+  const existing = cart.find(item => Number(item.id) === id);
 
   if (existing) {
-    if (existing.qty < product.stock) existing.qty++;
+    if (existing.qty < product.stock) {
+      existing.qty++;
+    } else {
+      alert("No hay más unidades disponibles.");
+    }
   } else {
     cart.push({ id, qty: 1 });
   }
 
   renderCart();
 }
+
 
 function renderCart() {
   $("cartCount").textContent =
@@ -578,11 +587,11 @@ function renderCart() {
 
   document.querySelectorAll("[data-minus]").forEach(button => {
     button.onclick = () => {
-      const item = cart.find(x => x.id === button.dataset.minus);
+      const item = cart.find(x => Number(x.id) === Number(button.dataset.minus));
       if (!item) return;
 
       if (item.qty > 1) item.qty--;
-      else cart = cart.filter(x => x.id !== button.dataset.minus);
+      else cart = cart.filter(x => Number(x.id) !== Number(button.dataset.minus));
 
       renderCart();
     };
@@ -590,7 +599,7 @@ function renderCart() {
 
   document.querySelectorAll("[data-plus]").forEach(button => {
     button.onclick = () => {
-      const item = cart.find(x => x.id === button.dataset.plus);
+      const item = cart.find(x => Number(x.id) === Number(button.dataset.plus));
       const p = products.find(x => x.id === button.dataset.plus);
 
       if (item && p && item.qty < p.stock) item.qty++;
