@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171717">
+<title>SOCK CLUB — Medias para todos los días</title>
+<style>
+:root{--ink:#171717;--muted:#777;--paper:#f7f5f0;--lime:#d8ff55;--line:#e7e3da}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+.top{background:var(--ink);color:white;text-align:center;padding:10px;font-size:12px;letter-spacing:1.4px}
+header{height:78px;padding:0 6vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.logo{font-weight:950;font-size:25px;letter-spacing:-1.5px}.logo span{color:#8a9e27}
+nav{display:flex;gap:28px;font-size:13px;font-weight:700}.cart{border:1px solid var(--ink);padding:11px 16px;border-radius:30px;font-weight:700;background:transparent}
+.hero{padding:65px 6vw 58px;display:grid;grid-template-columns:1.05fr .95fr;gap:35px;align-items:center}
+.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:#66751f}
+h1{font-size:clamp(48px,7vw,88px);line-height:.91;letter-spacing:-5px;margin:18px 0 22px;max-width:650px}
+.hero p{color:#626262;line-height:1.7;max-width:430px;font-size:15px}
+.cta{display:inline-block;background:var(--lime);padding:16px 23px;border-radius:3px;font-size:12px;font-weight:900;letter-spacing:1px;margin-top:16px}
+.hero-art{min-height:370px;background:#e5e0d4;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-art:before{content:"";position:absolute;width:290px;height:290px;border-radius:50%;background:var(--lime);right:7%;top:8%}
+.sock{position:absolute;width:110px;height:235px;background:#fff;border-radius:35px 35px 28px 28px;transform:rotate(25deg);box-shadow:14px 18px 0 #c9c5ba}
+.sock:after{content:"";position:absolute;width:125px;height:75px;background:inherit;border-radius:0 45px 35px 35px;bottom:-4px;left:-55px;transform:rotate(-25deg)}
+.sock.one{left:31%;top:18%;z-index:2}.sock.two{left:51%;top:25%;transform:rotate(-19deg);background:#262626;box-shadow:14px 18px 0 #aaa}
+.hero-tag{position:absolute;bottom:20px;left:22px;background:var(--ink);color:white;padding:12px 16px;font-size:11px;letter-spacing:1px;z-index:3}
+.section{padding:42px 6vw 80px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:25px}
+h2{font-size:38px;letter-spacing:-2px;margin:8px 0}.section-head p{color:var(--muted);font-size:13px}
+.filters{display:flex;gap:9px;margin:20px 0 28px;flex-wrap:wrap}
+.filter{border:1px solid #ccc7bc;background:transparent;padding:10px 16px;border-radius:30px;font-size:12px}.filter.active{background:var(--ink);color:white;border-color:var(--ink)}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.product{background:#fff;padding:12px 12px 18px;position:relative}
+.product-art{height:215px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-art:before{content:"";position:absolute;width:150px;height:150px;border-radius:50%;background:var(--tone);opacity:.8}
+.mini-sock{position:relative;width:57px;height:125px;background:var(--sock);border-radius:20px 20px 15px 15px;transform:rotate(24deg);box-shadow:7px 9px 0 rgba(0,0,0,.12)}
+.mini-sock:after{content:"";position:absolute;bottom:0;left:-28px;width:72px;height:40px;background:var(--sock);border-radius:0 25px 20px 20px;transform:rotate(-24deg)}
+.product:nth-child(even) .mini-sock{transform:rotate(-22deg)}
+.pill{position:absolute;top:12px;left:12px;background:var(--lime);font-size:9px;font-weight:900;letter-spacing:1px;padding:7px 9px}
+.product h3{font-size:15px;margin:14px 0 6px}.desc{font-size:11px;color:var(--muted);margin:0 0 13px}.buyrow{display:flex;align-items:center;justify-content:space-between}.price{font-size:16px;font-weight:900}
+.add{background:var(--ink);color:white;border:0;border-radius:2px;padding:10px 13px;font-size:11px;font-weight:800}
+.about{background:var(--lime);padding:52px 6vw;display:flex;justify-content:space-between;gap:30px;align-items:center}.about h2{max-width:520px;font-size:clamp(30px,4vw,48px);line-height:1.02}.about p{max-width:390px;line-height:1.7;font-size:14px}
+footer{padding:35px 6vw;background:var(--ink);color:white;display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:12px}.footlogo{font-weight:950;font-size:22px}
+.overlay{position:fixed;inset:0;background:#0007;display:none;z-index:9}.overlay.show{display:block}
+.drawer{position:fixed;right:0;top:0;height:100%;width:min(420px,100%);background:var(--paper);z-index:10;padding:25px;transform:translateX(105%);transition:.25s;display:flex;flex-direction:column}
+.drawer.show{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:15px}
+.close{border:0;background:none;font-size:25px}.cart-items{flex:1;overflow:auto}.cart-line{display:flex;justify-content:space-between;gap:12px;padding:17px 0;border-bottom:1px solid var(--line);font-size:13px}
+.qty button{border:1px solid #ccc;background:transparent;width:25px;height:25px}.total{display:flex;justify-content:space-between;font-weight:900;padding:18px 0;border-top:1px solid var(--line)}
+.checkout{background:var(--ink);color:white;border:0;padding:16px;font-weight:900;letter-spacing:1px}.empty{color:var(--muted);text-align:center;padding:45px 0;font-size:14px}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:45px}.hero-art{min-height:300px}.products{grid-template-columns:repeat(2,1fr)}nav{display:none}.about{display:block}}
+@media(max-width:480px){header{padding:0 5vw}.hero,.section{padding-left:5vw;padding-right:5vw}h1{letter-spacing:-3px}.products{gap:10px}.product-art{height:165px}.about{padding:38px 5vw}footer{padding:28px 5vw;display:block}footer div+div{margin-top:12px}}
+</style>
+</head>
+<body>
+<div class="top">ENVÍOS EN ECUADOR · ESCRÍBENOS PARA CONSULTAR DISPONIBILIDAD</div>
+<header>
+  <a class="logo" href="#">SOCK<span>CLUB.</span></a>
+  <nav><a href="#tienda">TIENDA</a><a href="#nosotros">NOSOTROS</a><a href="#contacto">CONTACTO</a></nav>
+  <button class="cart" id="openCart">BOLSA (<span id="count">0</span>)</button>
+</header>
+<main>
+<section class="hero">
+  <div><div class="eyebrow">COMODIDAD QUE SE NOTA</div><h1>TUS PIES.<br> TU ESTILO.</h1>
+    <p>Medias cómodas, versátiles y con personalidad. Encuentra tu próximo par favorito para todos los días.</p>
+    <a class="cta" href="#tienda">DESCUBRIR PRODUCTOS ↗</a>
+  </div>
+  <div class="hero-art"><div class="sock one"></div><div class="sock two"></div><div class="hero-tag">HECHAS PARA TU DÍA A DÍA</div></div>
+</section>
+<section class="section" id="tienda">
+  <div class="section-head"><div><div class="eyebrow">ELIGE TUS FAVORITAS</div><h2>La colección.</h2></div><p>Diseño simple. Comodidad real.</p></div>
+  <div class="filters">
+    <button class="filter active" data-filter="all">TODAS</button>
+    <button class="filter" data-filter="deportivas">DEPORTIVAS</button>
+    <button class="filter" data-filter="casuales">CASUALES</button>
+    <button class="filter" data-filter="formales">FORMALES</button>
+  </div>
+  <div class="products" id="products"></div>
+</section>
+<section class="about" id="nosotros"><div><div class="eyebrow">SOCK CLUB · ECUADOR</div><h2>Pequeños detalles. Gran diferencia.</h2></div><p>Creemos que la comodidad también es parte de tu estilo. Explora nuestra selección y encuentra medias para acompañarte en cada paso.</p></section>
+</main>
+<footer id="contacto"><div class="footlogo">SOCKCLUB.</div><div>¿Tienes preguntas? Haz tu pedido por WhatsApp.</div><div>© 2026 SOCK CLUB</div></footer>
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head"><strong>Tu bolsa</strong><button class="close" id="closeCart" aria-label="Cerrar">×</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="total"><span>Total</span><span id="total">$0.00</span></div>
+  <button class="checkout" id="checkout">PEDIR POR WHATSAPP</button>
+</aside>
+<script>
+const WHATSAPP_NUMBER = "593000000000"; // Reemplaza por tu número: código de país + número, sin +
+const products = [
+ {id:1,name:"Urban Black",desc:"Media clásica · Color negro",price:3.50,category:"casuales",sock:"#222",tone:"#dedbd1",tag:"MÁS VENDIDA"},
+ {id:2,name:"Sport White",desc:"Media deportiva · Color blanco",price:3.00,category:"deportivas",sock:"#fff",tone:"#dfe8ed",tag:""},
+ {id:3,name:"Daily Grey",desc:"Media casual · Color gris",price:3.50,category:"casuales",sock:"#888",tone:"#e8dfd4",tag:""},
+ {id:4,name:"Classic Navy",desc:"Media formal · Azul marino",price:4.00,category:"formales",sock:"#17233b",tone:"#dce2d9",tag:""},
+ {id:5,name:"Active Black",desc:"Media deportiva · Color negro",price:3.50,category:"deportivas",sock:"#252525",tone:"#e4e0d8",tag:""},
+ {id:6,name:"Cream Basic",desc:"Media casual · Color crema",price:3.00,category:"casuales",sock:"#d9c9a9",tone:"#e9e2d3",tag:""},
+ {id:7,name:"Office Black",desc:"Media formal · Color negro",price:4.00,category:"formales",sock:"#171717",tone:"#e2e1dc",tag:""},
+ {id:8,name:"Sport Blue",desc:"Media deportiva · Azul",price:3.50,category:"deportivas",sock:"#304d70",tone:"#dfe5e8",tag:""}
+];
+let cart=[];
+const money=n=>"$"+n.toFixed(2);
+function renderProducts(filter="all"){
+ document.getElementById("products").innerHTML=products.filter(p=>filter==="all"||p.category===filter).map(p=>`
+ <article class="product"><div class="product-art" style="--tone:${p.tone};--sock:${p.sock}">${p.tag?`<span class="pill">${p.tag}</span>`:""}<div class="mini-sock"></div></div>
+ <h3>${p.name}</h3><p class="desc">${p.desc}</p><div class="buyrow"><span class="price">${money(p.price)}</span><button class="add" onclick="addToCart(${p.id})">AÑADIR +</button></div></article>`).join("");
+}
+function addToCart(id){const item=cart.find(x=>x.id===id);if(item)item.qty++;else cart.push({id,qty:1});renderCart();openDrawer()}
+function changeQty(id,delta){const item=cart.find(x=>x.id===id);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);renderCart()}
+function renderCart(){
+ const count=cart.reduce((s,x)=>s+x.qty,0),total=cart.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);
+ document.getElementById("count").textContent=count;document.getElementById("total").textContent=money(total);
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map(x=>{const p=products.find(y=>y.id===x.id);return `<div class="cart-line"><div><strong>${p.name}</strong><br>${money(p.price)} c/u</div><div class="qty"><button onclick="changeQty(${p.id},-1)">−</button> ${x.qty} <button onclick="changeQty(${p.id},1)">+</button></div><strong>${money(p.price*x.qty)}</strong></div>`}).join(""):'<div class="empty">Tu bolsa está vacía.<br>¡Agrega tus medias favoritas!</div>';
+}
+function openDrawer(){document.getElementById("drawer").classList.add("show");document.getElementById("overlay").classList.add("show")}
+function closeDrawer(){document.getElementById("drawer").classList.remove("show");document.getElementById("overlay").classList.remove("show")}
+document.getElementById("openCart").onclick=openDrawer;document.getElementById("closeCart").onclick=closeDrawer;document.getElementById("overlay").onclick=closeDrawer;
+document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)}));
+document.getElementById("checkout").onclick=()=>{
+ if(!cart.length){alert("Agrega al menos un producto a tu bolsa.");return}
+ if(WHATSAPP_NUMBER==="593000000000"){alert("Antes de recibir pedidos, edita WHATSAPP_NUMBER en el código y coloca tu número de WhatsApp.");return}
+ const lines=cart.map(x=>{const p=products.find(y=>y.id===x.id);return `• ${p.name} x${x.qty} — ${money(p.price*x.qty)}`}).join("\n");
+ const total=cart.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);
+ const msg=encodeURIComponent(`¡Hola! Quiero hacer este pedido:\n${lines}\n\nTotal: ${money(total)}\n¿Me confirmas disponibilidad y envío?`);
+ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
+};
+renderProducts();renderCart();
+</script>
+</body>
+</html>
